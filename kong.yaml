@@ -1,0 +1,30 @@
+_format_version: "3.0"
+
+plugins:
+  - name: prometheus
+    enabled: true
+    config:
+      per_consumer: true
+      status_code_metrics: true
+      latency_metrics: true
+      bandwidth_metrics: true
+      upstream_health_metrics: true
+
+  - name: rate-limiting
+    enabled: true
+    config:
+      minute: 100 
+      policy: local 
+
+
+services:
+  - name: backend
+    url: http://backend:80
+    routes:
+    - name: ai_route
+      expression: 'http.path ^= "/api" '
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 10 
+            policy: local

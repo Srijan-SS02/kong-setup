@@ -1,0 +1,12 @@
+{$DOMAIN_SCHEME}://kong.{$DOMAIN_NAME} {
+    reverse_proxy kong:8000
+}
+
+{$DOMAIN_SCHEME}://kong-metrics.{$DOMAIN_NAME} {
+    reverse_proxy kong:8001
+}
+
+
+{$DOMAIN_SCHEME}://frontend.{$DOMAIN_NAME} {
+    reverse_proxy frontend:80
+}
